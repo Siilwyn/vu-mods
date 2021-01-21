@@ -80,7 +80,7 @@ export default function IndexPage({ repositories }) {
         </ul>
       </main>
       <footer className="p-4 mx-auto text-center">
-        Unofficial fan-made project.
+        Unofficial fan-made <a href="https://github.com/Siilwyn/vu-mods">open source</a> project.
         <br />
         Check the official
         <a className="text-vu-red" href="https://veniceunleashed.net/">
