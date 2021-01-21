@@ -1,0 +1,30 @@
+{
+  "name": "vu-mods",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "ky": "^0.25.1",
+    "ky-universal": "^0.8.2",
+    "next": "^10.0.5",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/line-clamp": "^0.1.0",
+    "tailwindcss": "^2.0.0"
+  },
+  "engines": {
+    "node": ">= 14"
+  },
+  "author": "Selwyn <talk@selwyn.cc> (https://selwyn.cc/)",
+  "license": "ISC",
+  "postcss": {
+    "plugins": {
+      "tailwindcss": {}
+    }
+  }
+}
