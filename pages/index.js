@@ -45,34 +45,29 @@ export default function IndexPage({ repositories }) {
               )
               .map((repository) => (
                 <li
-                  className="w-full h-48 p-4 bg-gray-800 rounded"
+                  className="w-full p-4 bg-gray-800 rounded"
                   key={repository.id}
                 >
-                  <div className="flex w-72 pb-1 mb-2 truncate border-b-2 border-vu-red">
-                    <h2 className="text-2xl mr-1">
-                      {repository.object.text.Name}
-                    </h2>
-                    &nbsp;
-                    <span className="text-gray-400">
-                      v{repository.object.text.Version}
-                    </span>
-                  </div>
+                  <h2 className="w-72 pb-1 mb-2 border-b-2 border-vu-red text-2xl truncate">
+                    {repository.object.text.Name}
+                  </h2>
                   <div className="h-16">
                     <p className="mb-4 overflow-hidden line-clamp-2">
                       {repository.object.text.Description}
                     </p>
                   </div>
                   <a
-                    className="py-1 px-2 mr-4 bg-blue-600 rounded-sm font-bold"
+                    className="inline-flex h-14 py-1 px-3 mr-4 font-bold bg-blue-600 rounded-sm"
                     href={repository.url}
                   >
                     Repository
                   </a>
                   <a
-                    className="py-1 px-2 mr-4 bg-blue-600 rounded-sm"
-                    href={`${repository.url}/archive/master.zip`}
+                    className="inline-flex h-14 flex-col py-1 px-3 mr-4 bg-blue-600 rounded-sm"
+                    href={repository.downloadMeta.url}
                   >
-                    Download
+                    <span className="font-bold">Download</span>
+                    <span className="text-gray-300">{repository.downloadMeta.target}</span>
                   </a>
                 </li>
               ))
@@ -111,6 +106,11 @@ export function getStaticProps() {
                   text
                 }
               }
+              releases(first: 1, orderBy: {field: CREATED_AT, direction: DESC}) {
+                nodes {
+                  tagName
+                }
+              }
             }
           }
         }
@@ -124,6 +124,7 @@ export function getStaticProps() {
         .map((repository) => ({
           ...repository,
           object: { text: JSON.parse(repository.object.text) },
+          downloadMeta: getDownloadMeta(repository),
         }))
     )
     .then((repositories) => {
@@ -132,4 +133,15 @@ export function getStaticProps() {
         revalidate: 60 * 60 * 24,
       };
     });
+}
+
+function getDownloadMeta(repository) {
+  const target = repository.releases.nodes.length
+    && repository.releases.nodes[0].tagName
+    || 'master';
+
+  return {
+    target,
+    url: `${repository.url}/archive/${target}.zip`,
+  };
 }
