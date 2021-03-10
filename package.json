@@ -18,7 +18,7 @@
     "tailwindcss": "^2.0.0"
   },
   "engines": {
-    "node": ">= 12"
+    "node": "^14.0.0"
   },
   "author": "Selwyn <talk@selwyn.cc> (https://selwyn.cc/)",
   "license": "ISC",
